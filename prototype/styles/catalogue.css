@@ -1,0 +1,111 @@
+:root {
+  --page-bg: #eef2f6;
+  --surface: #ffffff;
+  --text: #1b2430;
+  --muted: #4a5765;
+  --header-bg: #0b3a5c;
+}
+
+body {
+  margin: 0;
+  background-color: var(--page-bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* header and navigation */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--header-bg);
+}
+
+.brand {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.site-header nav a {
+  color: #ffffff;
+}
+
+.site-header nav a[aria-current="page"] {
+  font-weight: bold;
+}
+
+/* page frame */
+
+main {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+/* course cards */
+
+.course-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.course-card {
+  padding: 1rem;
+  border: 1px solid #c8ced4;
+  border-radius: 6px;
+  background-color: var(--surface);
+}
+
+.course-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* label / value pairs */
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+}
+
+dl > div {
+  display: contents;
+}
+
+dt {
+  color: var(--muted);
+}
+
+dd {
+  margin: 0;
+}
+
+/* search form */
+
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 1rem;
+}
+
+.search-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1 1 12rem;
+}

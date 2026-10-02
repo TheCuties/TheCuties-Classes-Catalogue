@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Courses | The Cuties Classes Catalogue</title>
+    <link rel="stylesheet" href="styles/catalogue.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html">The Cuties Classes Catalogue</a>
+
+      <nav aria-label="Main">
+        <a href="index.html" aria-current="page">Courses</a>
+        <a href="saved.html">Saved courses</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Course catalogue</h1>
+      <p>Browse the courses on offer this term. Open a course to see the full details.</p>
+
+      <section>
+        <h2>Search</h2>
+
+        <form class="search-form" action="index.html" method="get">
+          <label>
+            Search by course code or title
+            <input type="search" placeholder="e.g. CSCI" />
+          </label>
+
+          <label>
+            Course level
+            <select>
+              <option selected>Any level</option>
+              <option>200-level</option>
+              <option>300-level</option>
+            </select>
+          </label>
+
+          <button type="submit">Search</button>
+        </form>
+      </section>
+
+      <section>
+        <h2>Fall 2026 courses</h2>
+
+        <ul class="course-list">
+          <li>
+            <article class="course-card">
+              <p><strong>CSCI 3230U</strong></p>
+              <h3><a href="course.html">Web Development</a></h3>
+              <p>Dr. Elena Vasquezerez</p>
+              <dl>
+                <div>
+                  <dt>Schedule</dt>
+                  <dd>Mon &amp; Wed, 10:00&ndash;11:20</dd>
+                </div>
+                <div>
+                  <dt>Room</dt>
+                  <dd>ER 205</dd>
+                </div>
+              </dl>
+              <p>
+                <label><input type="checkbox" checked /> Save</label>
+              </p>
+            </article>
+          </li>
+
+          <li>
+            <article class="course-card">
+              <p><strong>CSCI 2140U</strong></p>
+              <h3><a href="course.html">Discrete Structures</a></h3>
+              <p>Dr. Alan Whitfield</p>
+              <dl>
+                <div>
+                  <dt>Schedule</dt>
+                  <dd>Tue &amp; Thu, 13:00&ndash;14:20</dd>
+                </div>
+                <div>
+                  <dt>Room</dt>
+                  <dd>S 118</dd>
+                </div>
+              </dl>
+              <p>
+                <label><input type="checkbox" /> Save</label>
+              </p>
+            </article>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
