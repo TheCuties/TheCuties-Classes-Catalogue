@@ -38,14 +38,20 @@ The Course Catalogue is a web page that allows Ontario Tech students to browse c
 | Vincenzo Langone 100985079 | Course discovery | Search - by course name or course code
 Filtering - by many metrics including but not limited to faculty, year, elective status, etc.
 Sorting - either alphabetically, by course level, or by class availability
-Database/API - setting up a Firebase database using Firebase Cloud Functions as API endpoints
-|
+Database/API - setting up a Firebase database using Firebase Cloud Functions as API endpoints 
 | Jann Denzell Romero 100909505 | Course information | Course detail page: prerequisites, availability, and linking labs and tutors, building location |
 | Jessica Arruda 100923345 | Front-End | Visual styling - responsive layouts, making the web page more welcoming, logo, colourful 
-Maps - including estimation, locations of campus, visual maps, list of transportation
-|
-| Anisha Penikalapati 100971909 | User Customizator | Rating, review submission, and displaying course reviews, helping with back-end programming for favourites and estimated distances
-| Mina Yang 100654767 | Course planning | Creating and managing a semester plan and related course organization
+Maps - including estimation, locations of campus, visual maps, list of transportation 
+
+| Anisha Penikalapati 100971909 | User Customizator | Course Reviews - Rating/review submission and displaying reviews
+Course Recommendations - Recommending courses based on courses they have taken
+Favourite Courses - Working with the backend logic to save favourite courses in a database 
+
+| Mina Yang 100654767 | Course Planner | Timetable - table displaying the full schedule. With colour coded blocks for the same courses.
+Add/Remove Courses - responsible for putting the course blocks into the timetable and removing them later.
+Handle Time Conflicts - checks for time conflicts and raises flags for the user to fix.
+Handle Missing Links - Ensures that all required sections for courses are part of the table. If missing, raise a flag for the user to fix. (Might not be necessary depending on how we implement adding).
+
 
 
 
