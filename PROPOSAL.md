@@ -3,9 +3,12 @@
 ### Prepared by: Vincenzo, Jessica, Anisha, Jann, Mina 
 
 
+
 ## 1. Project Overview
 
 The Course Catalogue is a web page that allows Ontario Tech students to browse courses. It provides a modern and visually appealing way to explore courses. Students can search for courses, filter and sort, as well as view detailed descriptions such as prerequisites and offered times. The app also allows students to save favourite courses, read and submit reviews, and build a semester plan with everything organized in one place. Course Catalogue improves accessibility and usability, helping students plan and explore their options before enrolment.
+
+
 
 ## 2. Team Roles and Responsibilities
 
@@ -16,6 +19,7 @@ The Course Catalogue is a web page that allows Ontario Tech students to browse c
 | Jessica Arruda 100923345 | Front-end Lead | Designs and implements UI and builds responsive layouts and styles
 | Anisha Penikalapati 100971909 | Back-end Lead | Ensures the backend supports the frontend
 | Mina Yang 100654767 | Quality Assurance Lead | Tests features, checks accessibility, and verifies the quality of the app
+
 
 
 ## 3. Scaled Feature Plan
@@ -36,6 +40,7 @@ The Course Catalogue is a web page that allows Ontario Tech students to browse c
 | Jessica Arruda 100923345 | Favourites and front-end design → saving/removing favourite courses, favourites page, visual styling, responsive layouts, and overall UI|
 | Anisha Penikalapati 100971909 | Reviews → rating, review submission, and displaying course reviews |
 | Mina Yang 100654767 | Course planning → creating and managing a semester plan and related course organization|
+
 
 
 ## 4. Data Source
@@ -68,8 +73,6 @@ For our data source, we will be using our own course database, served by a simpl
 ```GET /courses/search?c={course_code}```: Retrieves a list of all courses that match the query parameter in the course code.
 ```GET /courses/search?n={course_name}```: Retrieves a list of all courses that match the query parameter in the name.
 ```GET /courses/search?q={query}```: Retrieves a list of all courses that match the query parameter in the course code or in the name.
-
-
 
 ## 5. Comparators
 - **Ontario Tech Look Up Courses to Add:**
