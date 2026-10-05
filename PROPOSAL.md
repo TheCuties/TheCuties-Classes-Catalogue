@@ -86,5 +86,7 @@ For our data source, we will be using our own course database, served by a simpl
 	- Concordia’s course browsing system displays a detailed schedule of courses, including timings, prerequisites, and campus locations. The schedule and the whole interface are colour-coded so it is easy to visualize. However, students aren’t able to favourite courses and compare them. They also can’t read reviews from other students before deciding on a course. 
 	- Our app focuses on helping students explore courses by providing visual course cards with detailed descriptions, reviews, and the ability to favourite courses. Our app will help students explore, compare, and plan courses in a more accessible and responsive way. 
 
-
-
+## 6. Wireframes
+![](https://raw.githubusercontent.com/TheCuties/TheCuties-Classes-Catalogue/refs/heads/main/sketches/catalogue.png)
+![](https://raw.githubusercontent.com/TheCuties/TheCuties-Classes-Catalogue/refs/heads/main/sketches/detail.png)
+![](https://raw.githubusercontent.com/TheCuties/TheCuties-Classes-Catalogue/refs/heads/main/sketches/saved.png)
