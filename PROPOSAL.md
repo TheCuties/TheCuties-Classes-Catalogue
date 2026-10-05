@@ -6,7 +6,7 @@
 
 ## 1. Project Overview
 
-The Course Catalogue is a web page that allows Ontario Tech students to browse courses. It provides a modern and visually appealing way to explore courses. Students can search for courses, filter and [...] 
+The Course Catalogue is a web page that allows Ontario Tech students to browse courses. It provides a modern and visually appealing way to explore courses. Students can search for courses, filter and sort, as well as view detailed descriptions such as prerequisites and offered times. The app also allows students to save favourite courses, read and submit reviews, and build a semester plan with everything organized in one place. Course Catalogue improves accessibility and usability, helping students plan and explore their options before enrolment. 
 
 
 
