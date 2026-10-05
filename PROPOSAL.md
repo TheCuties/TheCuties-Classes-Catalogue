@@ -67,12 +67,12 @@ For our data source, we will be using our own course database, served by a simpl
 
 ```
 ### Initial Planned Endpoints
-```GET /courses```: Retrieves a list of all courses.
-```GET /courses/{course_code}```: Fetches the complete, detailed payload for a single class.
-```GET /courses/sublist?l={[course_codes_arr]}```: Fetches a specified list of courses (eg. those set as "favourites" in local storage)
-```GET /courses/search?c={course_code}```: Retrieves a list of all courses that match the query parameter in the course code.
-```GET /courses/search?n={course_name}```: Retrieves a list of all courses that match the query parameter in the name.
-```GET /courses/search?q={query}```: Retrieves a list of all courses that match the query parameter in the course code or in the name.
+- ```GET /courses```: Retrieves a list of all courses.
+- ```GET /courses/{course_code}```: Fetches the complete, detailed payload for a single class.
+- ```GET /courses/sublist?l={[course_codes_arr]}```: Fetches a specified list of courses (eg. those set as "favourites" in local storage)
+- ```GET /courses/search?c={course_code}```: Retrieves a list of all courses that match the query parameter in the course code.
+- ```GET /courses/search?n={course_name}```: Retrieves a list of all courses that match the query parameter in the name.
+- ```GET /courses/search?q={query}```: Retrieves a list of all courses that match the query parameter in the course code or in the name.
 
 ## 5. Comparators
 - **Ontario Tech Look Up Courses to Add:**
