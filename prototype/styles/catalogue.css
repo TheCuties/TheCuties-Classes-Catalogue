@@ -123,3 +123,29 @@ dd {
   white-space: nowrap;
   border: 0;
 }
+
+/* timetable */
+
+.timetable {
+  width: 100%;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.timetable th,
+.timetable td {
+  border: 1px solid #c8ced4;
+  background-color: #ffffff;
+  font-size: 0.8rem;
+  text-align: center;
+  width: 10rem;
+  height: 2rem;
+}
+
+#web-dev {
+  background-color:lightblue;
+}
+
+#discrete-structures {
+  background-color:lightgreen;
+}
