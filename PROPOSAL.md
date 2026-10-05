@@ -1,5 +1,3 @@
-
-
 # CSCI 3230U — Milestone 1: Project Proposal 
 # `Course Catalogue` 
 ### Prepared by: Vincenzo, Jessica, Anisha, Jann, Mina 
@@ -33,14 +31,43 @@ The Course Catalogue is a web page that allows Ontario Tech students to browse c
 
 | Member | Vertical Slice |
 |---|---|
-| Vincenzo Langone 100985079 | Course discovery → course list, search, filtering, and sorting | Directs the project and organizes meetings. Ensures milestone deadlines are met and manages the project board
-| Jann Denzell Romero 100909505 | Course information → course detail page, prerequisites, and availability 
-| Jessica Arruda 100923345 | Favourites and front-end design → saving/removing favourite courses, favourites page, visual styling, responsive layouts, and overall UI
-| Anisha Penikalapati 100971909 | Reviews → rating, review submission, and displaying course reviews 
-| Mina Yang 100654767 | Course planning → creating and managing a semester plan and related course organization
+| Vincenzo Langone 100985079 | Course discovery → course list, search, filtering, sorting, database and api |
+| Jann Denzell Romero 100909505 | Course information → course detail page, prerequisites, and availability |
+| Jessica Arruda 100923345 | Favourites and front-end design → saving/removing favourite courses, favourites page, visual styling, responsive layouts, and overall UI|
+| Anisha Penikalapati 100971909 | Reviews → rating, review submission, and displaying course reviews |
+| Mina Yang 100654767 | Course planning → creating and managing a semester plan and related course organization|
 
 
 ## 4. Data Source
+
+For our data source, we will be using our own course database, served by a simple REST API, through which our app will fetch its data, with a React frontend consuming it as a client. 
+### Example data
+
+```json
+{
+  "course code": "CSCI3089",
+  "course name": "Networks",
+  "instructor": "William Brown",
+  "semester": "Fall",
+  "description": "This course explores the key concepts of networks within the field of science.",
+  "room number": "D374",
+  "meeting days": "Mon/Wed",
+  "meeting time": "12:00 PM - 01:30 PM",
+  "prerequisite courses": "CSCI1138",
+  "enrollment_limit": 50,
+  "faculty": "Science",
+  "credits": 3,
+  "year": 2026
+}
+
+```
+### Initial Planned Endpoints
+```GET /courses```: Retrieves a list of all courses.
+```GET /courses/{course_code}```: Fetches the complete, detailed payload for a single class.
+```GET /courses/sublist?l={[course_codes_arr]}```: Fetches a specified list of courses (eg. those set as "favourites" in local storage)
+```GET /courses/search?c={course_code}```: Retrieves a list of all courses that match the query parameter in the course code.
+```GET /courses/search?n={course_name}```: Retrieves a list of all courses that match the query parameter in the name.
+```GET /courses/search?q={query}```: Retrieves a list of all courses that match the query parameter in the course code or in the name.
 
 
 
