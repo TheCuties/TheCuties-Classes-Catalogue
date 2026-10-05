@@ -6,11 +6,9 @@ A single-page web app for browsing a catalogue of university courses, so student
 
 A **course catalogue**: a searchable, filterable collection of course cards, each with a detail view (description, prerequisites, taken, availability), plus favourites/saved courses and a review or rating form.
 
-## Data source (tentative)
+## Data source
 
-Our **own course database**, served over HTTP — a small firebase server owned by the
-team, with a SvelteKit frontend consuming it as a client. Seeded with real course data from
-our institution.
+For our data source, we will be using our own course database, served by a simple REST API, through which our app will fetch its data, with a React frontend consuming it as a client.
 
 ## Team
 
