@@ -33,13 +33,19 @@ The Course Catalogue is a web page that allows Ontario Tech students to browse c
 - **Rating/Review Form** → Submit a course review or rating 
 - **Multiple Routes** → Different routes include pages for course list, course details, and favourites
 
-| Member | Vertical Slice |
+| Member | Vertical Slice | Responsibilities
 |---|---|
-| Vincenzo Langone 100985079 | Course discovery → course list, search, filtering, sorting, database and api |
-| Jann Denzell Romero 100909505 | Course information → course detail page, prerequisites, and availability |
-| Jessica Arruda 100923345 | Favourites and front-end design → saving/removing favourite courses, favourites page, visual styling, responsive layouts, and overall UI|
-| Anisha Penikalapati 100971909 | Reviews → rating, review submission, and displaying course reviews |
-| Mina Yang 100654767 | Course planning → creating and managing a semester plan and related course organization|
+| Vincenzo Langone 100985079 | Course discovery | Search - by course name or course code
+Filtering - by many metrics including but not limited to faculty, year, elective status, etc.
+Sorting - either alphabetically, by course level, or by class availability
+Database/API - setting up a Firebase database using Firebase Cloud Functions as API endpoints
+|
+| Jann Denzell Romero 100909505 | Course information | Course detail page: prerequisites, availability, and linking labs and tutors, building location |
+| Jessica Arruda 100923345 | Front-End | Visual styling - responsive layouts, making the web page more welcoming, logo, colourful 
+Maps - including estimation, locations of campus, visual maps, list of transportation
+|
+| Anisha Penikalapati 100971909 | User Customizator | Rating, review submission, and displaying course reviews, helping with back-end programming for favourites and estimated distances
+| Mina Yang 100654767 | Course planning | Creating and managing a semester plan and related course organization
 
 
 
