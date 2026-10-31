@@ -1,3 +1,8 @@
+// Link lets the title open the course detail page without reloading
+import { Link } from "react-router-dom";
+
+// Converts "CSCI 1010U" into "csci-1010u" for the URL
+import { toCourseSlug } from "../utils/courseSlug.js";
 
 // This component displays information about one course.
 // It receives the course object and favourite function from its parent.
@@ -51,9 +56,13 @@ function CourseCard({ course, onToggleFavourite }) {
 
         {/* COURSE NAME AND DEPARTMENT */}
 
-        {/* Display the course name as the card heading */}
         <h2 className="card-title text-lg mt-2">
-          {course.name}
+          <Link
+            to={`/courses/${toCourseSlug(course.code)}`}
+            className="link link-hover"
+          >
+            {course.name}
+          </Link>
         </h2>
 
         {/* Display which department or major offers the course */}

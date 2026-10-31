@@ -5,10 +5,11 @@ import { Route, Routes } from 'react-router-dom';
 // Import the navigation bar
 import Navbar from './components/Navbar.jsx';
 
-// Import the three pages
+// Import the four pages
 import CoursesPage from './pages/CoursesPage.jsx';
 import SavedPage from './pages/SavedPage.jsx';
 import TimetablePage from './pages/TimetablePage.jsx';
+import CourseDetailPage from './pages/CourseDetailPage.jsx';
 
 // Import the original course data
 import initialCourses from './data/courses.js';
@@ -52,6 +53,17 @@ export default function App() {
             path="/"
             element={
               <CoursesPage
+                courses={courses}
+                onToggleFavourite={toggleFavourite}
+              />
+            }
+          />
+
+          {/* Course detail page*/}
+          <Route
+            path="/courses/:courseCode"
+            element={
+              <CourseDetailPage
                 courses={courses}
                 onToggleFavourite={toggleFavourite}
               />
