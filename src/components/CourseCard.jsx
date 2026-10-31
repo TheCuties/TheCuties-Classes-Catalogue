@@ -7,6 +7,8 @@ import { toCourseSlug } from "../utils/courseSlug.js";
 // This component displays information about one course.
 // It receives the course object and favourite function from its parent.
 
+import ReviewPage from "../pages/ReviewPage";
+
 function CourseCard({ course, onToggleFavourite }) {
 
   // The course object contains all the information for one course.
@@ -139,6 +141,17 @@ function CourseCard({ course, onToggleFavourite }) {
           <div>
             <p className="font-semibold">Room</p>
             <p>{course.room}</p>
+          </div>
+
+            {/* Display the View Reviews Button */}
+          <Link to={`/reviews/${course.id}`}>
+            <button className="btn btn-primary btn-sm hover:scale-105 transition-transform">
+              View Reviews
+            </button>
+          </Link>
+
+          <div>
+
           </div>
 
         </div>

@@ -9,6 +9,7 @@ import Navbar from './components/Navbar.jsx';
 import CoursesPage from './pages/CoursesPage.jsx';
 import SavedPage from './pages/SavedPage.jsx';
 import TimetablePage from './pages/TimetablePage.jsx';
+import ReviewPage from "./pages/ReviewPage.jsx";
 import CourseDetailPage from './pages/CourseDetailPage.jsx';
 
 // Import the original course data
@@ -70,6 +71,17 @@ export default function App() {
             }
           />
 
+           {/* Course detail page*/}
+          <Route
+            path="/courses/:courseCode"
+            element={
+              <CourseDetailPage
+                courses={courses}
+                onToggleFavourite={toggleFavourite}
+              />
+            }
+          />
+
           {/* Saved courses page */}
           <Route
             path="/saved"
@@ -86,6 +98,14 @@ export default function App() {
             path="/timetable"
             element={
               <TimetablePage courses={courses} />
+            }
+          />
+
+             {/* Reviews page */}
+          <Route
+            path="/reviews/:id"
+            element={
+              <ReviewPage courses={courses} />
             }
           />
 
