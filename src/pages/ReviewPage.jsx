@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom" 
-import { useState } from 'react';
+import { useParams } from "react-router-dom"  // lets you read the URL
+import { useState } from 'react';  // lets you store and update data inside the component
 
 function ReviewPage({courses}) {
 
@@ -21,9 +21,9 @@ function ReviewPage({courses}) {
 		return saved ? JSON.parse(saved) : [];
 	});
 
-    // State for the new review text input
+    // State for the new review text input (stores text the user types)
 	const [newReview, setNewReview] = useState("");
-	// State for the rating stars with default of 5
+	// State for the rating stars with default of 5 (stores the rating selected from the dropdown)
 	const [newStars, setNewStars] = useState(5);
 
 	// Add a review to the list and store to localStorage
@@ -81,12 +81,14 @@ function ReviewPage({courses}) {
             className="textarea textarea-bordered w-full mb-4"
             placeholder="Write a review..."
             value={newReview}
+			// updates text on change
             onChange={(e) => setNewReview(e.target.value)}
           />
 		     {/* Drop down to select star rating*/}
 			<select
 				className="select select-bordered w-full mb-4"
 				value={newStars}
+				// updates stars on change
 				onChange={(e) => setNewStars(Number(e.target.value))}
 				>
 				<option value={5}>★★★★★</option>
@@ -117,17 +119,18 @@ function ReviewPage({courses}) {
           <div className="space-y-6">
             {reviews.map((review, index) => (
             <div
+				// tracks index
 				key={index}
 				className="bg-white border border-base-300 p-6 rounded-xl shadow-sm"
 				>
-				{/*Write the student name and the stars they give for the course*/}
+				{/*Add the student name and the stars they give for the course to the rating card*/}
 				<div className="flex items-center justify-between mb-2">
 					<span className="font-semibold text-base-content">{review.name}</span>
 					<span className="text-yellow-500">
 					{"★".repeat(review.stars)}
 					</span>
 				</div>
-				{/*Write the date*/}
+				{/*Add the date to the rating card*/}
 				<p className="text-base-content/70 text-sm mb-2">{review.date}</p>
 
 				{/*Add the student review to the rating card*/}
