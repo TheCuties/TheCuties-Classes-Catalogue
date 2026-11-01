@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 // Import the navigation bar
@@ -20,22 +20,41 @@ export default function App() {
   // Store all courses in React state
   const [courses, setCourses] = useState(initialCourses);
 
+  // useEffect runs this when the component loads
+  useEffect(() => {
+  // Gets the favourite course ids from localStorage
+  // If there are no favourite courses its an empty array
+  const saved = JSON.parse(localStorage.getItem("favourites")) || [];
+  
+  // Goes through the course list and checks if the course id is in the saved list
+  setCourses(prevCourses => prevCourses.map(course => saved.includes(course.id)
+  // If the course id is in the saved list then return the course object with the isFavourite changed to true
+  // Or else return the course object with the isFavourite changed to false
+        ? { ...course, isFavourite: true }
+        : { ...course, isFavourite: false }
+    )
+  );
+  }, []);
+
+
   // Function to add or remove a course from favourites
   const toggleFavourite = (id) => {
-
-    setCourses((previousCourses) =>
-      previousCourses.map((course) =>
-
-        // Find the course that was clicked
-        course.id === id
-
-          // Change its favourite status
-          ? { ...course, isFavourite: !course.isFavourite }
-
-          // Leave all other courses unchanged
-          : course
-      )
+     setCourses((previousCourses) => {
+    const updated = previousCourses.map((course) =>
+      // Find the course that was clicked
+      course.id === id
+         // Change its favourite status
+        ? { ...course, isFavourite: !course.isFavourite }
+        // Leave all other courses unchanged
+        : course
     );
+
+    // Save favourite IDs to localStorage
+    const favouriteIds = updated.filter(c => c.isFavourite).map(c => c.id);
+    localStorage.setItem("favourites", JSON.stringify(favouriteIds));
+
+    return updated;
+  });
   };
 
   return (
@@ -91,6 +110,7 @@ export default function App() {
                 onToggleFavourite={toggleFavourite}
               />
             }
+            
           />
 
           {/* Timetable page */}

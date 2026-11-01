@@ -9,12 +9,30 @@ function SavedPage({ courses, onToggleFavourite }) {
     (course) => course.isFavourite
   );
 
+  // Goes through all courses and if it is saved then it toggles it based on the course id
+  function clearAllFavourites() {
+    courses.forEach(course => {
+      // if favourite toggles to false
+      if(course.isFavourite){
+        onToggleFavourite(course.id)
+      }
+    });
+  }
+
   return (
     <div>
       {/* Page heading */}
       <h1 className="text-2xl font-semibold mb-6">
         Saved Courses
       </h1>
+
+      {/* Clear all Favourites Button */}
+      <button
+        className="btn btn-error btn-sm mb-4"
+        onClick={clearAllFavourites}
+      >
+        Remove All Favourites
+      </button>
 
       {/* Check if there are any saved courses */}
       {savedCourses.length === 0 ? (
