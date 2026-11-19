@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom" 
-import { useState } from 'react';
+import { useParams } from "react-router-dom"  // lets you read the URL
+import { useState } from 'react';  // lets you store and update data inside the component
 
 function ReviewPage({courses}) {
 
@@ -25,12 +25,9 @@ function ReviewPage({courses}) {
 		return saved ? JSON.parse(saved) : [];
 	});
 
-    // State for the new review text input
+    // State for the new review text input (stores text the user types)
 	const [newReview, setNewReview] = useState("");
-<<<<<<< Updated upstream
-	// State for the rating stars with default of 5
-	const [newStars, setNewStars] = useState(5);
-=======
+	// State for the rating stars with default of 5 (stores the rating selected from the dropdown)
 	// State for the rating stars with default of 0 filled stars (stores the rating from the selected stars)
 	const [newStars, setNewStars] = useState(0);
 
@@ -84,7 +81,6 @@ function ReviewPage({courses}) {
 
 	// State for the warning message if text area of stars are empty
 	const [errorMessage, setErrorMessage] = useState("");
->>>>>>> Stashed changes
 
 	// Add a review to the list and store to localStorage
 	function addReview() {
@@ -196,29 +192,6 @@ function ReviewPage({courses}) {
 
 		{/* Write a Review */}
 		{/* Header */}
-<<<<<<< Updated upstream
-        <div className="bg-white border border-base-300 p-6 rounded-xl shadow-sm w-full">
-          <h2 className="text-lg font-semibold mb-3">Write a Review</h2>
-		{/* Text Area to write review*/}
-          <textarea
-            className="textarea textarea-bordered w-full mb-4"
-            placeholder="Write a review..."
-            value={newReview}
-            onChange={(e) => setNewReview(e.target.value)}
-          />
-		     {/* Drop down to select star rating*/}
-			<select
-				className="select select-bordered w-full mb-4"
-				value={newStars}
-				onChange={(e) => setNewStars(Number(e.target.value))}
-				>
-				<option value={5}>★★★★★</option>
-				<option value={4}>★★★★</option>
-				<option value={3}>★★★</option>
-				<option value={2}>★★</option>
-				<option value={1}>★</option>
-			</select>
-=======
         <div className="bg-white border border-base-300 p-8 rounded-xl shadow-sm w-full">
           <h2 className="text-2xl font-semibold mb-3">Write a Review</h2>
 				<h3 className="font-semibold mb-3">
@@ -257,7 +230,6 @@ function ReviewPage({courses}) {
 				</button>
 				))}
 			</div>
->>>>>>> Stashed changes
 
 		    {/* Text Area to write review*/}
 		
@@ -300,23 +272,18 @@ function ReviewPage({courses}) {
           <div className="space-y-6">
             {reviews.map((review) => (
             <div
-<<<<<<< Updated upstream
-				key={index}
-				className="bg-white border border-base-300 p-6 rounded-xl shadow-sm"
-=======
 				// unique key for each review
 				key={review.id}
 				className="bg-white border border-base-300 p-8 rounded-xl shadow-sm w-full"
->>>>>>> Stashed changes
 				>
-				{/*Write the student name and the stars they give for the course*/}
+				{/*Add the student name and the stars they give for the course to the rating card*/}
 				<div className="flex items-center justify-between mb-2">
 					<span className="font-semibold text-base-content">{review.name}</span>
 					<span className="text-3xl text-yellow-500">
 					{"★".repeat(review.stars)}
 					</span>
 				</div>
-				{/*Write the date*/}
+				{/*Add the date to the rating card*/}
 				<p className="text-base-content/70 text-sm mb-2">{review.date}</p>
 
 				{/*Add the student review to the rating card*/}
