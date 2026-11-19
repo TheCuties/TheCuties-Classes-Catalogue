@@ -156,7 +156,7 @@ function ReviewPage({courses}) {
 				{/* Course Average Rating */}
 				<p className="text-5xl font-bold text-center mb-2">{averageRating.toFixed(1)}</p>
 				<p className="text-center text-yellow-500 text-3xl my-2">
-					{"★".repeat(Math.round(averageRating))}{"☆".repeat(5-Math.round(averageRating))}
+					{"★".repeat(Math.floor(averageRating))}{"⯪".repeat(Math.round(averageRating) - Math.floor(averageRating))}{"☆".repeat(5-Math.round(averageRating))}
 				</p>
 				<p className="text-center text-sm text-base-content/70">
 					Based on {reviewCount} review{reviewCount == 1 ? '' : 's'}
@@ -203,7 +203,7 @@ function ReviewPage({courses}) {
 						aria-label= ""
 						key={star}
 						onClick={() => setNewStars(star)}
-						className="btn btn-ghost btn-xsm text-xl text-amber-400">
+						className="btn btn-ghost btn-xsm text-4xl text-amber-400">
 						{star <= newStars ? "★" : "☆"}
 					</button>
 				))}
@@ -279,7 +279,7 @@ function ReviewPage({courses}) {
 				<div className="flex items-center justify-between mb-2">
 					<span className="font-semibold text-base-content">{review.name}</span>
 					<span className="text-3xl text-yellow-500">
-					{"★".repeat(review.stars)}
+					{"★".repeat(review.stars)}{"☆".repeat(5-review.stars)}
 					</span>
 				</div>
 				{/*Add the date to the rating card*/}
