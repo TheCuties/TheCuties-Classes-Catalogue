@@ -31,7 +31,7 @@ Also drop a marker where the code lives: `// AI-assisted - see AI-USAGE.md #<n>`
 ## Log
 
 <!-- Entries go below, newest last. Example: -->
-
+<!--
 ### #1 - Generate a price-formatting helper
 - **Date:** 2026-03-30
 - **Member:** Jane Doe
@@ -45,3 +45,33 @@ Also drop a marker where the code lives: `// AI-assisted - see AI-USAGE.md #<n>`
 
 - **What it produced & what I changed:** Kept the logic; renamed the parameter to match
   our code and added a test. Verified the rounding on a few values.
+-->
+
+  ### #1 - Rating Distribution Logic
+- **Date:** 2026-11-18
+- **Member:** Anisha
+- **Tool / model:** <free-tier assistant>
+- **Files:** `src/pages/ReviewPage`
+- **Prompt (verbatim):**
+
+  ```
+  Guide me to write the progress bar code
+  ```
+
+- **What it produced & what I changed:** 
+  AI suggested the logic for calculating star-rating percentages and displaying rating distribution bars. I integrated the calculations into the review system, adjusted the layout and styling, and verified that the values matched the review data.
+
+
+### #1 - Review and Saved Page Layout
+- **Date:** 2026-11-18
+- **Member:** Anisha
+- **Tool / model:** <free-tier assistant>
+- **Files:** `src/pages/ReviewPage`, `src/pages/SavedPage`
+- **Prompt (verbatim):**
+
+  ```
+ Can you edit the file to format the page better
+  ```
+
+- **What it produced & what I changed:** 
+AI suggested layout and spacing changes using Tailwind and DaisyUI classes. I modified the generated structure and styling to match the design of the rest of the application.

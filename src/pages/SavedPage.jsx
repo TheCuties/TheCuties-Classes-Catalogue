@@ -22,6 +22,7 @@ function SavedPage({ courses, onToggleFavourite }) {
   return (
     <div>
       {/* Header Card */}
+      { /*AI-assisted - see AI-USAGE.md #2*/ }
       <div className="bg-white border border-base-300 rounded-xl shadow-sm p-8 mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 

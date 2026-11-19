@@ -44,6 +44,7 @@ function ReviewPage({ courses }) {
 	});
 
 	// Calculating percentages of star counts to create bars
+	// AI-assisted - see AI-USAGE.md #1
 	let fiveStarPercent = 0;
 	let fourStarPercent = 0;
 	let threeStarPercent = 0;
@@ -132,10 +133,11 @@ function ReviewPage({ courses }) {
 	}
 
 	return (
-
+		
 		<div className="max-w-6xl mx-auto p-8">
 
 			{/* Header Card */}
+			{ /*AI-assisted - see AI-USAGE.md #2*/ }
 			<div className="bg-white border border-base-300 rounded-xl shadow-sm p-8 mb-8">
 				<h1 className="text-3xl font-bold mb-6">
 					{courseReview.code} - {courseReview.name}
