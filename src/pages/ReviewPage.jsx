@@ -27,7 +27,6 @@ function ReviewPage({courses}) {
 
     // State for the new review text input (stores text the user types)
 	const [newReview, setNewReview] = useState("");
-	// State for the rating stars with default of 5 (stores the rating selected from the dropdown)
 	// State for the rating stars with default of 0 filled stars (stores the rating from the selected stars)
 	const [newStars, setNewStars] = useState(0);
 
