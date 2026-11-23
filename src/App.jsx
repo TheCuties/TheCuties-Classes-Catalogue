@@ -14,59 +14,102 @@ export default function App() {
   // Storing the list of courses that comes from the API
   const [courses, setCourses] = useState([]);
 
-  //Tracking whether we are still waiting for the API response
-  const [loading, setLoading] = useState(true);
+  // Tracking whether we are still waiting for the API response
+  const [loadStatus, setLoadStatus] = useState('loading');
 
   // useEffect runs this when the component loads
   useEffect(() => {
+    setLoadStatus('loading');
+
+    const controller = new AbortController();
 
     // Calling our Cloud Function API
-    fetch("https://us-central1-classcatalogue.cloudfunctions.net/api/courses")
-    .then((res) => res.json())   // This is turning the response into JSON
-    .then((data) => {
-      // Getting any previously saved favourite course IDS from localStorage
-      const saved = JSON.parse(localStorage.getItem("favourites")) || [];
+    fetch(
+      "https://us-central1-classcatalogue.cloudfunctions.net/api/courses",
+      { signal: controller.signal }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP Response: ${response.status}`);
+        }
 
-      // Adding an isFavourite flag to every course
-      const withFavourites = data.map((course) => ({...course,
-        isFavourite: saved.includes(course.id), 
-      }));
-      
-      // This puts the data into state
-      setCourses(withFavourites); 
+        return response.json();
+      })
+      .then((data) => {
 
-      // Once we are done loading
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.error("Failed to load courses:", err);
-      setLoading(false);
-    });
-  }, []);  //An empty array = only runs once in useEffect
+        // Getting any previously saved favourite course IDs from localStorage
+        // If there are no favourite courses, it's an empty array
+        const saved = JSON.parse(localStorage.getItem("favourites")) || [];
 
-  // Adding toggleFavourite to toggle a course in/out of favourites 
-  //and save to localStorage
+        // Mapping API data into the structure used throughout the app
+        const mappedCourses = data.map((course) => ({
+          ...course,
+          campus: course.sections?.[0]?.campus || "",
+          instructor: course.sections?.[0]?.instructor || "",
+          schedule: course.sections?.[0]?.schedule || [],
+          time: `${course.sections?.[0]?.startTime || ""} - ${course.sections?.[0]?.endTime || ""}`,
+          isFavourite: saved.includes(course.id),
+          room: course.sections?.[0]?.room || "",
+          crn: course.sections?.[0]?.crn || "",
+          type: course.sections?.[0]?.type || "",
+          sectionNumber: course.sections?.[0]?.sectionNumber || "",
+        }));
+
+        // This puts the data into state
+        setCourses(mappedCourses);
+
+        // Once we are done loading
+        setLoadStatus('ok');
+      })
+      .catch((error) => {
+        if (error.name === 'AbortError') {
+          return;
+        }
+
+        console.error("Failed to load courses:", error);
+        setLoadStatus('error');
+      });
+
+    // Cancel the request if the component unmounts
+    return () => controller.abort();
+
+  }, []); // An empty array = only runs once in useEffect
+
+  // Adding toggleFavourite to toggle a course in/out of favourites
+  // and save to localStorage
   const toggleFavourite = (id) => {
     setCourses((previousCourses) => {
-      const updated = previousCourses.map((course) => course.id === id
-    ? {...course, isFavourite: !course.isFavourite} : course
-    );
 
-    // Only keeping the IDs of favourite courses
-    const favouriteIds = updated
-      .filter((c) => c.isFavourite)
-      .map((c) => c.id);
+      const updated = previousCourses.map((course) =>
+        // Find the course that was clicked
+        course.id === id
+          // Change its favourite status
+          ? { ...course, isFavourite: !course.isFavourite }
+          // Leave all other courses unchanged
+          : course
+      );
 
-    localStorage.setItem("favourites", JSON.stringify(favouriteIds));
+      // Only keeping the IDs of favourite courses
+      const favouriteIds = updated
+        .filter((course) => course.isFavourite)
+        .map((course) => course.id);
 
-    return updated;
+      // Save favourite IDs to localStorage
+      localStorage.setItem("favourites", JSON.stringify(favouriteIds));
+
+      return updated;
     });
   };
 
-  // Showing an loading message while the API is being fetched
-  //p-6 means 24px
-  if(loading){
+  // Showing a loading message while the API is being fetched
+  // p-6 means 24px
+  if (loadStatus === 'loading') {
     return <p className="p-6">Loading Courses...</p>;
+  }
+
+  // Showing an error message if the API request fails
+  if (loadStatus === 'error') {
+    return <p className="p-6">Could not load courses.</p>;
   }
 
   return (
@@ -84,6 +127,7 @@ export default function App() {
               />
             }
           />
+
           <Route
             path="/courses/:slug"
             element={
@@ -93,6 +137,8 @@ export default function App() {
               />
             }
           />
+
+          {/* Saved courses page */}
           <Route
             path="/saved"
             element={
@@ -102,10 +148,13 @@ export default function App() {
               />
             }
           />
+
           <Route
             path="/timetable"
             element={<TimetablePage courses={courses} />}
           />
+
+          {/* Reviews page */}
           <Route
             path="/reviews/:id"
             element={<ReviewPage courses={courses} />}
