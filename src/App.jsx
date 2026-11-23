@@ -1,74 +1,80 @@
 
 import { useState, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
-// Import the navigation bar
 import Navbar from './components/Navbar.jsx';
-
-// Import the four pages
 import CoursesPage from './pages/CoursesPage.jsx';
 import SavedPage from './pages/SavedPage.jsx';
 import TimetablePage from './pages/TimetablePage.jsx';
 import ReviewPage from "./pages/ReviewPage.jsx";
 import CourseDetailPage from './pages/CourseDetailPage.jsx';
 
-// Import the original course data
-import initialCourses from './data/courses.js';
-
 export default function App() {
 
-  // Store all courses in React state
-  const [courses, setCourses] = useState(initialCourses);
+  // Storing the list of courses that comes from the API
+  const [courses, setCourses] = useState([]);
+
+  //Tracking whether we are still waiting for the API response
+  const [loading, setLoading] = useState(true);
 
   // useEffect runs this when the component loads
   useEffect(() => {
-  // Gets the favourite course ids from localStorage
-  // If there are no favourite courses its an empty array
-  const saved = JSON.parse(localStorage.getItem("favourites")) || [];
-  
-  // Goes through the course list and checks if the course id is in the saved list
-  setCourses(prevCourses => prevCourses.map(course => saved.includes(course.id)
-  // If the course id is in the saved list then return the course object with the isFavourite changed to true
-  // Or else return the course object with the isFavourite changed to false
-        ? { ...course, isFavourite: true }
-        : { ...course, isFavourite: false }
-    )
-  );
-  }, []);
 
+    // Calling our Cloud Function API
+    fetch("https://us-central1-classcatalogue.cloudfunctions.net/api/courses")
+    .then((res) => res.json())   // This is turning the response into JSON
+    .then((data) => {
+      // Getting any previously saved favourite course IDS from localStorage
+      const saved = JSON.parse(localStorage.getItem("favourites")) || [];
 
-  // Function to add or remove a course from favourites
+      // Adding an isFavourite flag to every course
+      const withFavourites = data.map((course) => ({...course,
+        isFavourite: saved.includes(course.id), 
+      }));
+      
+      // This puts the data into state
+      setCourses(withFavourites); 
+
+      // Once we are done loading
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error("Failed to load courses:", err);
+      setLoading(false);
+    });
+  }, []);  //An empty array = only runs once in useEffect
+
+  // Adding toggleFavourite to toggle a course in/out of favourites 
+  //and save to localStorage
   const toggleFavourite = (id) => {
-     setCourses((previousCourses) => {
-    const updated = previousCourses.map((course) =>
-      // Find the course that was clicked
-      course.id === id
-         // Change its favourite status
-        ? { ...course, isFavourite: !course.isFavourite }
-        // Leave all other courses unchanged
-        : course
+    setCourses((previousCourses) => {
+      const updated = previousCourses.map((course) => course.id === id
+    ? {...course, isFavourite: !course.isFavourite} : course
     );
 
-    // Save favourite IDs to localStorage
-    const favouriteIds = updated.filter(c => c.isFavourite).map(c => c.id);
+    // Only keeping the IDs of favourite courses
+    const favouriteIds = updated
+      .filter((c) => c.isFavourite)
+      .map((c) => c.id);
+
     localStorage.setItem("favourites", JSON.stringify(favouriteIds));
 
     return updated;
-  });
+    });
   };
+
+  // Showing an loading message while the API is being fetched
+  //p-6 means 24px
+  if(loading){
+    return <p className="p-6">Loading Courses...</p>;
+  }
 
   return (
     <>
-      {/* Display the navigation bar */}
       <Navbar />
 
-      {/* Main content area */}
       <main className="p-6">
-
-        {/* React Router determines which page to display */}
         <Routes>
-
-          {/* Main Courses page */}
           <Route
             path="/"
             element={
@@ -78,10 +84,8 @@ export default function App() {
               />
             }
           />
-
-          {/* Course detail page*/}
           <Route
-            path="/courses/:courseCode"
+            path="/courses/:slug"
             element={
               <CourseDetailPage
                 courses={courses}
@@ -89,19 +93,6 @@ export default function App() {
               />
             }
           />
-
-           {/* Course detail page*/}
-          <Route
-            path="/courses/:courseCode"
-            element={
-              <CourseDetailPage
-                courses={courses}
-                onToggleFavourite={toggleFavourite}
-              />
-            }
-          />
-
-          {/* Saved courses page */}
           <Route
             path="/saved"
             element={
@@ -110,27 +101,16 @@ export default function App() {
                 onToggleFavourite={toggleFavourite}
               />
             }
-            
           />
-
-          {/* Timetable page */}
           <Route
             path="/timetable"
-            element={
-              <TimetablePage courses={courses} />
-            }
+            element={<TimetablePage courses={courses} />}
           />
-
-             {/* Reviews page */}
           <Route
             path="/reviews/:id"
-            element={
-              <ReviewPage courses={courses} />
-            }
+            element={<ReviewPage courses={courses} />}
           />
-
         </Routes>
-
       </main>
     </>
   );
