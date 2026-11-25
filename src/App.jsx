@@ -1,74 +1,123 @@
 
 import { useState, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
-// Import the navigation bar
 import Navbar from './components/Navbar.jsx';
-
-// Import the four pages
 import CoursesPage from './pages/CoursesPage.jsx';
 import SavedPage from './pages/SavedPage.jsx';
 import TimetablePage from './pages/TimetablePage.jsx';
 import ReviewPage from "./pages/ReviewPage.jsx";
 import CourseDetailPage from './pages/CourseDetailPage.jsx';
 
-// Import the original course data
-import initialCourses from './data/courses.js';
-
 export default function App() {
 
-  // Store all courses in React state
-  const [courses, setCourses] = useState(initialCourses);
+  // Storing the list of courses that comes from the API
+  const [courses, setCourses] = useState([]);
+
+  // Tracking whether we are still waiting for the API response
+  const [loadStatus, setLoadStatus] = useState('loading');
 
   // useEffect runs this when the component loads
   useEffect(() => {
-  // Gets the favourite course ids from localStorage
-  // If there are no favourite courses its an empty array
-  const saved = JSON.parse(localStorage.getItem("favourites")) || [];
-  
-  // Goes through the course list and checks if the course id is in the saved list
-  setCourses(prevCourses => prevCourses.map(course => saved.includes(course.id)
-  // If the course id is in the saved list then return the course object with the isFavourite changed to true
-  // Or else return the course object with the isFavourite changed to false
-        ? { ...course, isFavourite: true }
-        : { ...course, isFavourite: false }
+    setLoadStatus('loading');
+
+    const controller = new AbortController();
+
+    // Calling our Cloud Function API
+    fetch(
+      "https://us-central1-classcatalogue.cloudfunctions.net/api/courses",
+      { signal: controller.signal }
     )
-  );
-  }, []);
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP Response: ${response.status}`);
+        }
 
+        return response.json();
+      })
+      .then((data) => {
 
-  // Function to add or remove a course from favourites
+        // Getting any previously saved favourite course IDs from localStorage
+        // If there are no favourite courses, it's an empty array
+        const saved = JSON.parse(localStorage.getItem("favourites")) || [];
+
+        // Mapping API data into the structure used throughout the app
+        const mappedCourses = data.map((course) => ({
+          ...course,
+          campus: course.sections?.[0]?.campus || "",
+          instructor: course.sections?.[0]?.instructor || "",
+          schedule: course.sections?.[0]?.schedule || [],
+          time: `${course.sections?.[0]?.startTime || ""} - ${course.sections?.[0]?.endTime || ""}`,
+          isFavourite: saved.includes(course.id),
+          room: course.sections?.[0]?.room || "",
+          crn: course.sections?.[0]?.crn || "",
+          type: course.sections?.[0]?.type || "",
+          sectionNumber: course.sections?.[0]?.sectionNumber || "",
+        }));
+
+        // This puts the data into state
+        setCourses(mappedCourses);
+
+        // Once we are done loading
+        setLoadStatus('ok');
+      })
+      .catch((error) => {
+        if (error.name === 'AbortError') {
+          return;
+        }
+
+        console.error("Failed to load courses:", error);
+        setLoadStatus('error');
+      });
+
+    // Cancel the request if the component unmounts
+    return () => controller.abort();
+
+  }, []); // An empty array = only runs once in useEffect
+
+  // Adding toggleFavourite to toggle a course in/out of favourites
+  // and save to localStorage
   const toggleFavourite = (id) => {
-     setCourses((previousCourses) => {
-    const updated = previousCourses.map((course) =>
-      // Find the course that was clicked
-      course.id === id
-         // Change its favourite status
-        ? { ...course, isFavourite: !course.isFavourite }
-        // Leave all other courses unchanged
-        : course
-    );
+    setCourses((previousCourses) => {
 
-    // Save favourite IDs to localStorage
-    const favouriteIds = updated.filter(c => c.isFavourite).map(c => c.id);
-    localStorage.setItem("favourites", JSON.stringify(favouriteIds));
+      const updated = previousCourses.map((course) =>
+        // Find the course that was clicked
+        course.id === id
+          // Change its favourite status
+          ? { ...course, isFavourite: !course.isFavourite }
+          // Leave all other courses unchanged
+          : course
+      );
 
-    return updated;
-  });
+      // Only keeping the IDs of favourite courses
+      const favouriteIds = updated
+        .filter((course) => course.isFavourite)
+        .map((course) => course.id);
+
+      // Save favourite IDs to localStorage
+      localStorage.setItem("favourites", JSON.stringify(favouriteIds));
+
+      return updated;
+    });
   };
+
+  // Showing a loading message while the API is being fetched
+  // p-6 means 24px
+  if (loadStatus === 'loading') {
+    return <p className="p-6">Loading Courses...</p>;
+  }
+
+  // Showing an error message if the API request fails
+  if (loadStatus === 'error') {
+    return <p className="p-6">Could not load courses.</p>;
+  }
 
   return (
     <>
-      {/* Display the navigation bar */}
       <Navbar />
 
-      {/* Main content area */}
       <main className="p-6">
-
-        {/* React Router determines which page to display */}
         <Routes>
-
-          {/* Main Courses page */}
           <Route
             path="/"
             element={
@@ -79,7 +128,6 @@ export default function App() {
             }
           />
 
-          {/* Course detail page*/}
           <Route
             path="/courses/:courseCode"
             element={
@@ -99,27 +147,19 @@ export default function App() {
                 onToggleFavourite={toggleFavourite}
               />
             }
-            
           />
 
-          {/* Timetable page */}
           <Route
             path="/timetable"
-            element={
-              <TimetablePage courses={courses} />
-            }
+            element={<TimetablePage courses={courses} />}
           />
 
-             {/* Reviews page */}
+          {/* Reviews page */}
           <Route
             path="/reviews/:id"
-            element={
-              <ReviewPage courses={courses} />
-            }
+            element={<ReviewPage courses={courses} />}
           />
-
         </Routes>
-
       </main>
     </>
   );
