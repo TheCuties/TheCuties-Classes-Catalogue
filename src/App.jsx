@@ -129,7 +129,7 @@ export default function App() {
           />
 
           <Route
-            path="/courses/:slug"
+            path="/courses/:courseCode"
             element={
               <CourseDetailPage
                 courses={courses}
