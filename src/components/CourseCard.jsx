@@ -157,12 +157,6 @@ function CourseCard({ course, onToggleFavourite }) {
           {/* Display the classroom location */}
           <div>
             <p className="font-semibold">Room</p>
-            <p>{course.room}</p>
-          </div>
-
-          {/* Display the classroom location */}
-          <div>
-            <p className="font-semibold">Room</p>
             <p>{course.sections?.[0]?.room || "—"}</p>
           </div>
 

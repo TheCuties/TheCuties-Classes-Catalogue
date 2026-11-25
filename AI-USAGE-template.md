@@ -62,7 +62,7 @@ Also drop a marker where the code lives: `// AI-assisted - see AI-USAGE.md #<n>`
   AI suggested the logic for calculating star-rating percentages and displaying rating distribution bars. I integrated the calculations into the review system, adjusted the layout and styling, and verified that the values matched the review data.
 
 
-### #1 - Review and Saved Page Layout
+### #2 - Review and Saved Page Layout
 - **Date:** 2026-11-18
 - **Member:** Anisha
 - **Tool / model:** <free-tier assistant>

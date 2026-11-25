@@ -160,7 +160,7 @@ function ReviewPage({ courses }) {
 							<span className="font-semibold">Instructor:</span> {courseReview.instructor}
 						</p>
 						<p className="text-base-content/80 mb-6">
-							<span className="font-semibold">Campus:</span> { }
+							<span className="font-semibold">Campus:</span> {courseReview.campus }
 						</p>
 						<p className="text-base-content/80 mb-6">
 							<span className="font-semibold">Schedule:</span> {courseReview.schedule[0]}, {courseReview.schedule[1]}
