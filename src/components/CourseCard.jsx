@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 // Converts "CSCI 1010U" into "csci-1010u" for the URL
 import { toCourseSlug } from "../utils/courseSlug.js";
+import { formatTimeRange } from "../utils/formatTime.js";
 
 // This component displays information about one course.
 // It receives the course object and favourite function from its parent.
@@ -149,7 +150,7 @@ function CourseCard({ course, onToggleFavourite }) {
             <p className="font-semibold">Time</p>
             <p>
               {course.sections?.[0]
-                ? `${course.sections[0].startTime} – ${course.sections[0].endTime}`
+                ? formatTimeRange(course.sections[0].startTime, course.sections[0].endTime)
                 : "—"}
             </p>
           </div>
