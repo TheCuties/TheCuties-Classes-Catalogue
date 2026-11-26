@@ -3,19 +3,36 @@ import { Link, useParams } from "react-router-dom";
 
 // Import the function that finds a course using the code in the URL
 import { findCourseBySlug } from "../utils/courseSlug.js";
+import { formatTimeRange } from "../utils/formatTime.js";
 
-// Receive the courses and favourite function from App.jsx
+const SECTION_GROUPS = [
+  { type: "Lecture", title: "Lecture sections" },
+  { type: "Tutorial", title: "Tutorial sections" },
+  { type: "Laboratory", title: "Laboratory sections" },
+];
+
+function SectionCard({ section }) {
+  return (
+    <li className="rounded-lg border border-base-300 p-3 text-sm space-y-1">
+      <p className="font-semibold">
+        Section {section.sectionNumber}
+        <span className="font-normal opacity-70"> · CRN {section.crn}</span>
+      </p>
+      <p><span className="opacity-70">Instructor:</span> {section.instructor}</p>
+      <p><span className="opacity-70">Days:</span> {section.schedule.join(", ")}</p>
+      <p><span className="opacity-70">Time:</span> {formatTimeRange(section.startTime, section.endTime)}</p>
+      <p><span className="opacity-70">Room:</span> {section.room}</p>
+    </li>
+  );
+}
+
 function CourseDetailPage({ courses, onToggleFavourite }) {
 
   // Read the course code from the URL.
-  // Example: /courses/csci-1010u gives "csci-1010u"
   const { courseCode } = useParams();
-
-  // Find the course that matches the code in the URL
   const course = findCourseBySlug(courses, courseCode);
 
-  // If no course matches the code, show an error message
-  // instead of a blank page
+  // No course matches the code -> show an error message
   if (!course) {
     return (
       <div className="max-w-3xl mx-auto space-y-4">
@@ -31,18 +48,28 @@ function CourseDetailPage({ courses, onToggleFavourite }) {
       </div>
     );
   }
+  
+  const sections = course.sections || [];
+
+  // Since every section of a course is on the same campus just take it from the first one
+  const campus = sections[0]?.campus || "";
+
+  const sectionGroups = SECTION_GROUPS
+    .map((group) => ({
+      ...group,
+      sections: sections.filter((section) => section.type === group.type),
+    }))
+    .filter((group) => group.sections.length > 0);
 
   // Store each detail as a label and value.
   // This list is looped through below so each row
   // does not need to be written out by hand.
+  // Instructor, Schedule and Room are in the section cards now, because they are different for each section
   const details = [
-    { label: "Instructor", value: course.instructor },
-    { label: "Department", value: course.department },
     { label: "Term", value: course.semester },
-    { label: "Schedule", value: `${course.schedule.join(" & ")}, ${course.time}` },
-    { label: "Room", value: course.room },
-    { label: "Credits", value: course.credits },
+    { label: "Department", value: course.department },
     { label: "Year level", value: `Year ${course.year}` },
+    { label: "Credits", value: course.credits },
   ];
 
   return (
@@ -78,6 +105,11 @@ function CourseDetailPage({ courses, onToggleFavourite }) {
 
           <p>
             {course.description}
+          </p>
+
+          <p>
+            <span className="opacity-70">Campus:</span>{" "}
+            <span className="font-medium">{campus}</span>
           </p>
 
           {/* COURSE DETAILS */}
@@ -120,6 +152,22 @@ function CourseDetailPage({ courses, onToggleFavourite }) {
 
         </div>
       </article>
+
+      {/* SECTION BOXES: one box per section type that this course has */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {sectionGroups.map((group) => (
+          <section key={group.type} className="card bg-base-100 shadow-md">
+            <div className="card-body">
+              <h2 className="text-lg font-semibold">{group.title}</h2>
+              <ul className="space-y-3">
+                {group.sections.map((section) => (
+                  <SectionCard key={section.crn} section={section} />
+                ))}
+              </ul>
+            </div>
+          </section>
+        ))}
+      </div>
 
     </div>
   );
