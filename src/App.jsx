@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar.jsx';
 import CoursesPage from './pages/CoursesPage.jsx';
-import SavedPage from './pages/SavedPage.jsx';
+import FavouritesPage from './pages/FavouritesPage.jsx';
 import TimetablePage from './pages/TimetablePage.jsx';
 import ReviewPage from "./pages/ReviewPage.jsx";
 import CourseDetailPage from './pages/CourseDetailPage.jsx';
@@ -38,9 +38,9 @@ export default function App() {
       })
       .then((data) => {
 
-        // Getting any previously saved favourite course IDs from localStorage
+        // Getting any previously favourited course IDs from localStorage
         // If there are no favourite courses, it's an empty array
-        const saved = JSON.parse(localStorage.getItem("favourites")) || [];
+        const favourites = JSON.parse(localStorage.getItem("favourites")) || [];
 
         // Mapping API data into the structure used throughout the app
         const mappedCourses = data.map((course) => ({
@@ -49,7 +49,7 @@ export default function App() {
           instructor: course.sections?.[0]?.instructor || "",
           schedule: course.sections?.[0]?.schedule || [],
           time: formatTimeRange(course.sections?.[0]?.startTime, course.sections?.[0]?.endTime),
-          isFavourite: saved.includes(course.id),
+          isFavourite: favourites.includes(course.id),
           room: course.sections?.[0]?.room || "",
           crn: course.sections?.[0]?.crn || "",
           type: course.sections?.[0]?.type || "",
@@ -139,11 +139,11 @@ export default function App() {
             }
           />
 
-          {/* Saved courses page */}
+          {/* Favourites page */}
           <Route
-            path="/saved"
+            path="/favourites"
             element={
-              <SavedPage
+              <FavouritesPage
                 courses={courses}
                 onToggleFavourite={toggleFavourite}
               />

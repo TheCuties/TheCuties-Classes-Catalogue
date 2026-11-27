@@ -27,7 +27,7 @@ function CourseCard({ course, onToggleFavourite }) {
 
   // The course object contains all the information for one course.
   // onToggleFavourite allows the user to add or remove a course
-  // from their saved courses.
+  // from their favourited courses.
 
   return (
 

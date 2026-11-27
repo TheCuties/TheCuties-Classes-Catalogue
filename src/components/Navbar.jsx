@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom'
 
 const LINKS = [
   { to: '/', label: 'Courses', end: true },
-  { to: '/saved', label: 'Saved courses' },
+  { to: '/favourites', label: 'Favourites' },
   { to: '/timetable', label: 'Timetable' },
 ]
 
