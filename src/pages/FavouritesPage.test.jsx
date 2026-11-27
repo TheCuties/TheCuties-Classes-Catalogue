@@ -3,13 +3,13 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import "@testing-library/jest-dom";
-import SavedPage from "./SavedPage";
+import FavouritesPage from "./FavouritesPage";
 
-// Tests whether a message shows up when there are no saved courses
-test("shows a message when there are no saved courses", () => {
+// Tests whether a message shows up when there are no favourited courses
+test("shows a message when there are no favourited courses", () => {
 
   render(
-    <SavedPage
+    <FavouritesPage
       courses={[]}
       onToggleFavourite={() => { }}
     />
@@ -17,12 +17,12 @@ test("shows a message when there are no saved courses", () => {
 
   // Assert
   expect(
-    screen.getByText("No Saved Courses Yet")
+    screen.getByText("No Favourited Courses Yet")
   ).toBeInTheDocument();
 });
 
-// Tests saved courses are displayed
-test("displays saved courses", () => {
+// Tests favourited courses are displayed
+test("displays favourited courses", () => {
   // Arrange
   const courses = [
     {
@@ -40,7 +40,7 @@ test("displays saved courses", () => {
 
   render(
     <MemoryRouter>
-    <SavedPage
+    <FavouritesPage
       courses={courses}
       onToggleFavourite={() => {}}
     />
