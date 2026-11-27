@@ -8,6 +8,7 @@ import SavedPage from './pages/SavedPage.jsx';
 import TimetablePage from './pages/TimetablePage.jsx';
 import ReviewPage from "./pages/ReviewPage.jsx";
 import CourseDetailPage from './pages/CourseDetailPage.jsx';
+import { formatTimeRange } from './utils/formatTime.js';
 
 export default function App() {
 
@@ -47,7 +48,7 @@ export default function App() {
           campus: course.sections?.[0]?.campus || "",
           instructor: course.sections?.[0]?.instructor || "",
           schedule: course.sections?.[0]?.schedule || [],
-          time: `${course.sections?.[0]?.startTime || ""} - ${course.sections?.[0]?.endTime || ""}`,
+          time: formatTimeRange(course.sections?.[0]?.startTime, course.sections?.[0]?.endTime),
           isFavourite: saved.includes(course.id),
           room: course.sections?.[0]?.room || "",
           crn: course.sections?.[0]?.crn || "",
