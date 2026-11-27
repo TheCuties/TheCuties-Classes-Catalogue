@@ -20,7 +20,7 @@ function timeToHours(duration) {
 
 function TimetablePage({ courses }) {
   const hours = Array.from({ length: 14 }, (_, i) => `${i + 8}:00 - ${i + 9}:00`);
-  const favouriteCourses = courses.filter((course) => course.isFavourite);
+  const favouriteCourses = courses.filter((course) => course.isAdded);
 
   return (
     <div className="w-full mx-auto space-y-6 p-4">
