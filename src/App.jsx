@@ -41,6 +41,7 @@ export default function App() {
         // Getting any previously favourited course IDs from localStorage
         // If there are no favourite courses, it's an empty array
         const favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+        const added = JSON.parse(localStorage.getItem("added")) || [];
 
         // Mapping API data into the structure used throughout the app
         const mappedCourses = data.map((course) => ({
@@ -50,6 +51,7 @@ export default function App() {
           schedule: course.sections?.[0]?.schedule || [],
           time: formatTimeRange(course.sections?.[0]?.startTime, course.sections?.[0]?.endTime),
           isFavourite: favourites.includes(course.id),
+          isAdded: added.includes(course.id),
           room: course.sections?.[0]?.room || "",
           crn: course.sections?.[0]?.crn || "",
           type: course.sections?.[0]?.type || "",
@@ -102,6 +104,30 @@ export default function App() {
     });
   };
 
+  const toggleAddedToTimetable = (id) => {
+    setCourses((previousCourses) => {
+
+      const updated = previousCourses.map((course) =>
+        // Find the course that was clicked
+        course.id === id
+          // Change its added status
+          ? { ...course, isAdded: !course.isAdded }
+          // Leave all other courses unchanged
+          : course
+      );
+
+      // Only keeping the IDs of added courses
+      const addedIds = updated
+        .filter((course) => course.isAdded)
+        .map((course) => course.id);
+
+      // Save added IDs to localStorage
+      localStorage.setItem("added", JSON.stringify(addedIds));
+
+      return updated;
+    });
+  };
+
   // Showing a loading message while the API is being fetched
   // p-6 means 24px
   if (loadStatus === 'loading') {
@@ -135,6 +161,7 @@ export default function App() {
               <CourseDetailPage
                 courses={courses}
                 onToggleFavourite={toggleFavourite}
+                onToggleAddedToTimetable={toggleAddedToTimetable}
               />
             }
           />
@@ -152,7 +179,11 @@ export default function App() {
 
           <Route
             path="/timetable"
-            element={<TimetablePage courses={courses} />}
+            element={
+              <TimetablePage 
+                courses={courses} 
+                onToggleAddedToTimetable={toggleAddedToTimetable}
+              />}
           />
 
           {/* Reviews page */}

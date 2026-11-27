@@ -55,7 +55,7 @@ function FavouritesPage({ courses, onToggleFavourite }) {
             No Favourited Courses Yet
           </h2>
           <p className="text-base-content/70">
-            Save courses to view them here.
+            Favourite courses to view them here.
           </p>
         </div>
       ) :

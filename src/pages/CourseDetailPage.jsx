@@ -55,7 +55,7 @@ function starText(rating) {
   return "★".repeat(filled) + "☆".repeat(5 - filled);
 }
 
-function CourseDetailPage({ courses, onToggleFavourite }) {
+function CourseDetailPage({ courses, onToggleFavourite, onToggleAddedToTimetable }) {
 
   // Read the course code from the URL.
   const { courseCode } = useParams();
@@ -196,18 +196,18 @@ function CourseDetailPage({ courses, onToggleFavourite }) {
                 Back to all courses
               </Link>
 
-              {/* Save button. When clicked, it sends this course's ID to the onToggleFavourite function. */}
+              {/* Add button. When clicked, it sends this course's ID to the onToggleAddedToTimetable function. */}
               <button
                 type="button"
-                onClick={() => onToggleFavourite(course.id)}
-                aria-pressed={course.isFavourite}
+                onClick={() => onToggleAddedToTimetable(course.id)}
+                aria-pressed={course.isAdded}
                 className={
-                  course.isFavourite
+                  course.isAdded
                     ? "btn btn-primary"
                     : "btn btn-outline btn-primary"
                 }
               >
-                {course.isFavourite ? "Saved" : "Save this course"}
+                {course.isAdded ? "Remove Course" : "Add Course"}
               </button>
 
             </div>
