@@ -20,7 +20,7 @@ function timeToHours(duration) {
 
 function TimetablePage({ courses }) {
   const hours = Array.from({ length: 14 }, (_, i) => `${i + 8}:00 - ${i + 9}:00`);
-  const savedCourses = courses.filter((course) => course.isFavourite);
+  const favouriteCourses = courses.filter((course) => course.isFavourite);
 
   return (
     <div className="w-full mx-auto space-y-6 p-4">
@@ -61,7 +61,7 @@ function TimetablePage({ courses }) {
         <div className="absolute inset-0 top-10 left-0 col-span-8 pointer-events-none grid grid-cols-8">
           <div className="col-span-1"></div>
           <div className="col-span-7 relative h-full">
-            {savedCourses.map((course) => {
+            {favouriteCourses.map((course) => {
               // TODO: Change to use date/time library when the input data is available.
               const [startTimeStr, endTimeStr] = course.time.split(" - ");
               const startHour = timeToHours(startTimeStr);

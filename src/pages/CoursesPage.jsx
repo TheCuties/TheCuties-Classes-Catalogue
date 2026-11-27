@@ -2,6 +2,9 @@
 // Import the reusable CourseCard component
 import CourseCard from "../components/CourseCard";
 
+import SearchBar from "../components/SearchBar";
+import CourseFilters from "../components/CourseFilters";
+
 // Receive the courses and favourite function from App.jsx
 function CoursesPage({ courses, onToggleFavourite }) {
 
@@ -14,6 +17,19 @@ function CoursesPage({ courses, onToggleFavourite }) {
       <h1 className="text-2xl font-semibold mb-6">
         Courses
       </h1>
+
+      {/* search and filter row. ONLY UI FOR NOW TODO IN M3*/}
+      <div
+        role="search"
+        className="flex flex-col lg:flex-row lg:items-center gap-3 mb-6"
+      >
+        <SearchBar />
+        <CourseFilters />
+        <button type="button" className="btn btn-primary">
+          Search
+        </button>
+
+      </div>
 
       {/* Display all courses in a grid layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

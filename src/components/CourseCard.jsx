@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 // Converts "CSCI 1010U" into "csci-1010u" for the URL
 import { toCourseSlug } from "../utils/courseSlug.js";
+import { formatTimeRange } from "../utils/formatTime.js";
 
 // This component displays information about one course.
 // It receives the course object and favourite function from its parent.
@@ -11,9 +12,22 @@ import ReviewPage from "../pages/ReviewPage";
 
 function CourseCard({ course, onToggleFavourite }) {
 
+  // Getting unique campuses for the course
+  const campuses = course.sections
+  ? [...new Set(course.sections.map((s) => s.campus))] : [];
+
+  //Turning the API value into a short clear label
+  const campusLabel = campuses
+    .map((c) => {
+      if 
+      (c.includes("North")) return "North Campus";
+      if (c.includes("Downtown")) return "Downtown Campus";
+    })
+    .join(", ");
+
   // The course object contains all the information for one course.
   // onToggleFavourite allows the user to add or remove a course
-  // from their saved courses.
+  // from their favourited courses.
 
   return (
 
@@ -92,7 +106,7 @@ function CourseCard({ course, onToggleFavourite }) {
           {/* Display the instructor's name */}
           <div>
             <p className="font-semibold">Instructor</p>
-            <p>{course.instructor}</p>
+            <p>{course.sections?.[0]?.instructor || "—"}</p>
           </div>
 
           {/* Display the number of course credits */}
@@ -128,19 +142,29 @@ function CourseCard({ course, onToggleFavourite }) {
               readable string, such as "Monday, Wednesday". */}
           <div>
             <p className="font-semibold">Schedule</p>
-            <p>{course.schedule.join(", ")}</p>
+            <p>{course.sections?.[0]?.schedule?.join(", ") || "—"}</p>
           </div>
 
           {/* Display the starting and ending time */}
           <div>
             <p className="font-semibold">Time</p>
-            <p>{course.time}</p>
+            <p>
+              {course.sections?.[0]
+                ? formatTimeRange(course.sections[0].startTime, course.sections[0].endTime)
+                : "—"}
+            </p>
           </div>
 
           {/* Display the classroom location */}
           <div>
             <p className="font-semibold">Room</p>
-            <p>{course.room}</p>
+            <p>{course.sections?.[0]?.room || "—"}</p>
+          </div>
+
+          {/* Showing which campus the class is held on */}
+          <div>
+            <p className="font-semibold">Campus</p>
+            <p>{campusLabel || "—"}</p>
           </div>
 
             {/* Display the View Reviews Button */}
