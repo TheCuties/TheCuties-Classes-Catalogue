@@ -110,7 +110,7 @@ function CourseDetailPage({ courses, onToggleFavourite, onToggleAddedToTimetable
       </div>
 
       {/* RIGHT SIDE: reviews panel */}
-      <aside className="card bg-base-100 shadow-md lg:col-span-1">
+      <aside className="card bg-base-100 border border-base-300 shadow-sm lg:col-span-1">
         <div className="card-body gap-4">
           <h2 className="text-xl font-semibold">Reviews</h2>
 
