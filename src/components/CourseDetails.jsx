@@ -40,7 +40,7 @@ function CourseDetails({ course, onToggleFavourite, onToggleAddedToTimetable }) 
   // Store each detail as a label and value.
   // This list is looped through below so each row
   // does not need to be written out by hand.
-  // Instructor, Schedule and Room are in the section cards, because they are different for each section
+  // Instructor, Schedule and Room are in the section cards now, because they are different for each section
   const details = [
     { label: "Term", value: course.semester },
     { label: "Department", value: course.department },
@@ -51,7 +51,7 @@ function CourseDetails({ course, onToggleFavourite, onToggleAddedToTimetable }) 
   return (
     <div className="space-y-6">
 
-      <article className="card bg-base-100 shadow-md">
+      <article className="card bg-base-100 border border-base-300 shadow-sm">
         <div className="card-body gap-4">
 
           {/* Favourite star */}
@@ -126,7 +126,7 @@ function CourseDetails({ course, onToggleFavourite, onToggleAddedToTimetable }) 
       {/* SECTION BOXES: one box per section type that this course has */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {sectionGroups.map((group) => (
-          <section key={group.type} className="card bg-base-100 shadow-md">
+          <section key={group.type} className="card bg-base-100 border border-base-300 shadow-sm">
             <div className="card-body">
               <h2 className="text-lg font-semibold">{group.title}</h2>
               <ul className="space-y-3">
